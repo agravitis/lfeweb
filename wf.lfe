@@ -1,5 +1,4 @@
 (defrecord email from to subject body)
-
 (defrecord elementbase (module 'undefined)      id actions (show_if 'true) (class '"") (style '""))
 (defrecord template (module 'element_template)  id actions (show_if 'true) (class '"") (style '"") file (bindings '()))
 (defrecord body (module 'element_body)          id actions (show_if 'true) (class '"") (style '""))
@@ -41,29 +40,25 @@
 (defrecord upload  
   (module 'element_upload)                      id actions (show_if 'true) (class '"") (style '"") tag 
   (show_button 'true) (button_text '"Upload"))
-(defrecord validate (module 'element_validate) 
-                id actions (show_if 'true) (class '"") (style '"")
-		(on 'submit) (success_text '" ") 'validators 'attacg_to)
-(defrecord validation_error (module 'element_validation_error) 
-                                                id actions (show_if 'true) (class '"") (style '"")
+(defrecord validate (module 'action_validate) 
+                trigger target actions (show_if 'true)
+		(on 'submit) (success_text '" ") validators attach_to)
+(defrecord validation_error (module 'action_validation_error) 
+                                                trigger target actions (show_if 'true)
 						(text '""))
-(defrecord alert (module 'element_alert)        id actions (show_if 'true) (class '"") (style '"") (text '""))
-(defrecord flash (module 'element_flash)        id actions (show_if 'true) (class '"") (style '""))
-(defrecord script (module 'action_script)       id actions (show_if 'true) (class '"") (style '"") script)
+(defrecord alert (module 'action_alert)        trigger target actions (show_if 'true) (text '""))
+(defrecord flash (module 'action_flash)        trigger target actions (show_if 'true))
+(defrecord script (module 'action_script)       trigger target actions (show_if 'true) (class '"") (style '"") script)
 (defrecord actionbase (module 'undefined)       trigger target actions (show_if 'true))
 (defrecord event (module 'action_event)         trigger target actions (show_if 'true) (type 'click) (delay 1) postback delegate)
-(defrecord comet_start (module 'element_comet_start)  trigger target actions (show_if 'true))
+(defrecord comet_start (module 'action_comet_start)  trigger target actions (show_if 'true))
 
 
 
-;; -define(VALIDATOR_BASE(Module), module=Module, text="Failed.").
-;; -record(validatorbase, {?VALIDATOR_BASE(undefined)}).
-;; -record(is_required, {?VALIDATOR_BASE(validator_is_required)}).
-(defrecord is_required (module 'validator_is_required) (text '"Failed."))
-;; -record(is_email, {?VALIDATOR_BASE(validator_is_email)}).
-;; -record(is_integer, {?VALIDATOR_BASE(validator_is_integer)}).
-;; -record(min_length, {?VALIDATOR_BASE(validator_min_length), length}).
-;; -record(max_length, {?VALIDATOR_BASE(validator_max_length), length}).
-;; -record(confirm_password, {?VALIDATOR_BASE(validator_confirm_password), password}).
-;; -record(custom, {?VALIDATOR_BASE(validator_custom), function, tag }).
-;; -record(js_custom, {?VALIDATOR_BASE(validator_js_custom), function, args="{}" }).
+(defrecord is_required       (module 'validator_is_required) (text '"Required"))
+(defrecord is_email          (module 'validator_is_email) (text '"Invalid e-mail address"))
+(defrecord is_integer        (module 'validator_is_integer) (text '"Invalid value"))
+(defrecord min_length        (module 'validator_min_length) (text '"Value out of range"))
+(defrecord max_length        (module 'validator_max_length) (text '"Value out of range"))
+(defrecord confirm_password  (module 'validator_confirm_password) (text '"Passwords must match"))
+
